@@ -111,7 +111,6 @@ char *commandPath(char *command)
 	}
 	if (stat(command, &buf) == 0)
 	{
-		free(path);
 		free(command_path);
 		return (command);
 	}

@@ -44,7 +44,6 @@ int builtins_list(char **list_tokens, char **envp)
  */
 int execute(char **list_tokens, char **LT, char **en)
 {
-	char *e[] = {NULL};
 	pid_t pid;
 	char *spp[] = {"ls", NULL};
 	char *first = strtok(LT[0], " \n");
@@ -65,7 +64,7 @@ int execute(char **list_tokens, char **LT, char **en)
 		}
 		else
 		{
-			if (execve(commandPath(first), spp, e) == -1)
+			if (execve(commandPath(first), spp, en) == -1)
 				perror("Error with execution");
 		}
 	}
