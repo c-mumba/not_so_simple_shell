@@ -38,7 +38,7 @@ char *read_user_input(void)
 char **parse_user_input(char *_inputs)
 {
 	int s = _strlen(_inputs);
-	char *_input;
+	char *_input = (char *)malloc(s);
 	char *copy_input, *s1, *token, *token2;
 	const char *delim = " \n";
 	int counter = 0, i = 0;
