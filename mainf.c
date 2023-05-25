@@ -12,8 +12,9 @@
 int main(int argc, char *argv[], char *env[])
 {
 	inf_loop(env);
-	if (!argc && !argv)
+	if (!argc || !argv)
 	return (0);
 	else
 	return (0);
 }
+
