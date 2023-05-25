@@ -60,7 +60,8 @@ char *_strcat(char *destination, const char *source)
  */
 int _strncmp(const char *str1, const char *str2, size_t num)
 {
-	for (size_t i = 0; i < num; i++)
+	size_t i;
+	for (i = 0; i < num; i++)
 	{
 		if (str1[i] != str2[i])
 			return ((int)(str1[i] - str2[i]));

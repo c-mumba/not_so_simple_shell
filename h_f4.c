@@ -1,4 +1,4 @@
-#inlude "main.h"
+#include "main.h"
 
 /**
  * builtins_list- Short description, single line
@@ -10,7 +10,7 @@
  */
 int builtins_list(char **list_tokens, char **envp)
 {
-	int iterator, i = 0;
+	int iterator;
 	char enp[] = "env";
 
 	builtins options[] = {
@@ -44,7 +44,7 @@ int builtins_list(char **list_tokens, char **envp)
  */
 int execute(char **list_tokens, char **LT, char **en)
 {
-	pid_t pid, wpid;
+	pid_t pid;
 	char *spp[] = {"ls", NULL};
 	char *first = strtok(LT[0], " \n");
 	int stat, size = getStringListLength(list_tokens);
@@ -88,9 +88,9 @@ int execute(char **list_tokens, char **LT, char **en)
  */
 void inf_loop(char **envp)
 {
-	char *user_input, *command_paths;
+	char *user_input;
 	char **list_tokenss;
-	int execute_command, state;
+	int state;
 	char *prompt = "$ ";
 
 	do {

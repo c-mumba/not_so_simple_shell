@@ -37,10 +37,11 @@ char *read_user_input(void)
  */
 char **parse_user_input(char *_inputs)
 {
-	char _input[_strlen(_inputs)];
+	int s = _strlen(_inputs);
+	char *_input;
 	char *copy_input, *s1, *token, *token2;
 	const char *delim = " \n";
-	int counter = 0, i = 0, z = 0;
+	int counter = 0, i = 0;
 	char **list_of_tokens;
 
 	strcpy(_input, _inputs);
@@ -86,11 +87,10 @@ char **parse_user_input(char *_inputs)
  */
 char *commandPath(char *command)
 {
-	char *path, *copy_path, *path_token, *command_path, *_exit = "exit";
+	char *path, *copy_path, *path_token, *command_path;
 	char *pr = "bash: %s: command not found\n";
 	const char *delim = ":";
 	struct stat buf;
-	char *ll[] = {"exit", "99", NULL};
 
 	if (command == NULL)
 		return (NULL);
@@ -142,7 +142,7 @@ char *commandPath(char *command)
  */
 int builtin_exit(char **list_tokens)
 {
-	int i, err_no = 0;
+	int i;
 
 	if (strtok(list_tokens[1], " \n") == NULL)
 		exit(0);
@@ -155,7 +155,7 @@ int builtin_exit(char **list_tokens)
 				errno = -1;
 				return (-1);
 			}
-		err_no = _atoi(list_tokens[1]);
+		errno = _atoi(list_tokens[1]);
 	}
 	exit(errno);
 }
