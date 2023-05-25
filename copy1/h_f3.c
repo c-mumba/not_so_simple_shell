@@ -12,13 +12,19 @@ char *read_user_input(void)
 	size_t n = 0;
 	int bytes_read = 0;
 
-	user_input = (char *)malloc(10 * sizeof(char));
+	user_input = (char *)malloc(3);
 
+	if (user_input == NULL)
+		return (NULL);
 	bytes_read = getline(&user_input, &n, stdin);
 	if (bytes_read == -1)
 		return (NULL);
 	if (_strcmp(user_input, "\n", 0))
+	{
+		free(user_input);
 		return (NULL);
+	}
+	free(user_input);
 	return (user_input);
 }
 
@@ -68,6 +74,7 @@ char **parse_user_input(char *_inputs)
 		list_of_tokens[2] = NULL;
 		list_of_tokens[0] = s1;
 	}
+	free(list_of_tokens);
 	return (list_of_tokens);
 }
 
@@ -100,17 +107,24 @@ char *commandPath(char *command)
 	{
 		command_path = (char *)malloc(_strlen(path_token) + _strlen(command) + 2);
 
+		if (!command_path)
+			return (NULL);
 		_strcpy(command_path, path_token);
 		_strcat(command_path, "/");
 		_strcat(command_path, command);
 		_strcat(command_path, "\0");
 		if (stat(command_path, &buf) == 0)
+		{
+			free(command_path);
 			return (command_path);
+		}
 		else
 			path_token = strtok(NULL, delim);
 	}
+	free(copy_path);
 	if (stat(command, &buf) == 0)
 	{
+		free(copy_path);
 		free(path);
 		free(command_path);
 		return (command);
@@ -128,7 +142,7 @@ char *commandPath(char *command)
  */
 int builtin_exit(char **list_tokens)
 {
-	int i, err_no = 0;
+	int i;
 
 	if (strtok(list_tokens[1], " \n") == NULL)
 		exit(0);
@@ -141,9 +155,9 @@ int builtin_exit(char **list_tokens)
 				errno = -1;
 				return (-1);
 			}
-		err_no = _atoi(list_tokens[1]);
+		errno = _atoi(list_tokens[1]);
 	}
-	exit(err_no);
+	exit(errno);
 }
 /**
  * builtin_env- Short description, single line
