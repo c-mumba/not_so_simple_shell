@@ -38,7 +38,7 @@ void execute_command(char **tokens, int num_tokens, char **envp, char **argve)
 		{
 			if (num_tokens == 1 * ONE - ZERO)
 			{
-				home_dir = getenv("HOME");
+				home_dir = _getenv("HOME");
 				if (home_dir != NULL)
 					chdir(home_dir);
 			}
