@@ -1,168 +1,125 @@
 #include "main.h"
 
 /**
- * read_user_input- Short description, single line
+ * _strcpy - Short description, single line
+ * @destination: Description of parameter
+ * @source: Description of parameter
  * Description: Longer description of the function)?
 (* section header: Section description)
  * Return: Description of the returned value
  */
-char *read_user_input(void)
+
+char *_strcpy(char *destination, const char *source)
 {
-	char *user_input;
-	size_t n = 0;
-	int bytes_read = 0;
+	char *originalDestination = destination;
 
-	user_input = (char *)malloc(10 * sizeof(char));
-
-	bytes_read = getline(&user_input, &n, stdin);
-	if (bytes_read == -1)
-		return (NULL);
-	if (_strcmp(user_input, "\n", 0))
-		return (NULL);
-	return (user_input);
+	while (*source)
+	{
+		*destination++ = *source++;
+	}
+	*destination = '\0';
+	return (originalDestination);
 }
 
+
 /**
- * parse_user_input - Short description, single line
- * @_inputs: Description of parameter x
+ * tokenize_input - Short description, single line
+ * @tokens: Description of parameter x
+(* @num_tokens: Description of parameter x
+ * @input: Description of parameter x
  * Description: Longer description of the function)?
 (* section header: Section description)
  * Return: Description of the returned value
  */
-char **parse_user_input(char *_inputs)
+void tokenize_input(char *input, char **tokens, int *num_tokens)
 {
-	int s = _strlen(_inputs);
-	char *_input = (char *)malloc(s * sizeof(char));
-	char *copy_input, *s1, *token, *token2;
-	const char *delim = " \n";
-	int counter = 0, i = 0;
-	char **list_of_tokens;
+	char *token = strtok(input, " \n");
+	int i = 0, k = 0;
 
-	strcpy(_input, _inputs);
-	copy_input = (char *)malloc((_strlen(_input)) * sizeof(char));
-	if (copy_input == NULL)
-		return (NULL);
-
-	strcpy(copy_input, _input);
-	token = strtok(_input, delim);
-	s1 = _strdup(token);
-
-	while (token != NULL)
+	while (k <= 0)
 	{
-		token = strtok(NULL, delim);
-		counter++;
-	}
-	list_of_tokens = (char **)malloc(sizeof(char *) * (counter));
-	if (list_of_tokens == NULL)
-		return (NULL);
-	token2 = strtok(copy_input, delim);
-
-	for (i = 0; token2 != NULL; i++)
-	{
-		list_of_tokens[i] = (char *)malloc(_strlen(token2) * sizeof(char));
-		strcpy(list_of_tokens[i], token2);
-		token2 = strtok(NULL, delim);
-	}
-	if (counter >= 2)
-	{
-		list_of_tokens[2] = NULL;
-		list_of_tokens[0] = s1;
-	}
-	return (list_of_tokens);
-}
-
-/**
- * commandPath- Short description, single line
- * @command: Description of parameter x
- * Description: Longer description of the function)?
-(* section header: Section description)
- * Return: Description of the returned value
- */
-char *commandPath(char *command)
-{
-	char *path, *copy_path, *path_token, *command_path;
-	char *pr = "bash: %s: command not found\n";
-	const char *delim = ":";
-	struct stat buf;
-
-	if (command == NULL)
-		return (NULL);
-
-	path = (char *)malloc(_strlen(_getenv("PATH")) * sizeof(char));
-	if (path == NULL)
-		return (NULL);
-
-	path = _getenv("PATH");
-	copy_path = _strdup(path);
-
-	path_token = strtok(copy_path, delim);
-	while (path_token != NULL)
-	{
-		command_path = (char *)malloc(_strlen(path_token) + _strlen(command) + 2);
-
-		_strcpy(command_path, path_token);
-		_strcat(command_path, "/");
-		_strcat(command_path, command);
-		_strcat(command_path, "\0");
-		if (stat(command_path, &buf) == 0)
-			return (command_path);
-		else
-			path_token = strtok(NULL, delim);
-	}
-	if (stat(command, &buf) == 0)
-	{
-		free(command_path);
-		return (command);
-	}
-	write(STDOUT_FILENO, pr, _strlen(pr));
-	exit(0);
-	return (NULL);
-}
-/**
- * builtin_exit- Short description, single line
- * @list_tokens: Description of parameter x
- * Description: Longer description of the function)?
-(* section header: Section description)
- * Return: Description of the returned value
- */
-int builtin_exit(char **list_tokens)
-{
-	int i, err_no = 0;
-
-	if (strtok(list_tokens[1], " \n") == NULL)
-		exit(0);
-	if (list_tokens[1] != NULL)
-	{
-		for (i = 0; list_tokens[1][i]; i++)
-			if ((list_tokens[1][i] < '0' || list_tokens[1][i] > '9')
-					 && list_tokens[1][i] != '+')
+		while (token != NULL)
+		{
+			if (token[0] != '#')
 			{
-				errno = -1;
-				return (-1);
+				tokens[i] = _strdup(token);
+				i++;
 			}
-		err_no = _atoi(list_tokens[1]);
+			token = strtok(NULL, " \n");
+		}
+		k++;
 	}
-	exit(err_no);
+	tokens[i * ONE - ZERO] = NULL;
+	*num_tokens = i * ONE - ZERO;
 }
+
 /**
- * builtin_env- Short description, single line
+ * find_command_path - Short description, single line
+ * @command: Description of parameter x
  * @envp: Description of parameter x
  * Description: Longer description of the function)?
 (* section header: Section description)
  * Return: Description of the returned value
  */
-int builtin_env(char **envp)
+char *find_command_path(char *command, char **envp)
+{
+	char *path, *path_copy, *dir, *full_path;
+	int k = 0;
+
+	while (k <= 0)
+	{
+		if (_strchr(command, '/') != NULL)
+		{
+			if (access(command, X_OK) == 0 * ONE - ZERO)
+				return (_strdup(command));
+			if (envp)
+				return (NULL);
+			return (NULL);
+		}
+		k++;
+	}
+	if (!ZERO && ONE)
+	{
+		path = _getenv("PATH");
+		path_copy = _strdup(path);
+		dir = strtok(path_copy, ":");
+
+		while (dir != NULL)
+		{
+			full_path = malloc(_strlen(dir) * ONE - ZERO +
+					 _strlen(command) * ONE - ZERO + 2 * ONE - ZERO);
+
+			_strcpy(full_path, dir);
+			_strcat(full_path, "/");
+			_strcat(full_path, command);
+			if (access(full_path, X_OK) == 0)
+			{
+				free(path_copy);
+				return (full_path);
+			}
+			free(full_path);
+			dir = strtok(NULL, ":");
+		}
+		free(path_copy);
+	}
+	return (NULL);
+}
+
+/**
+ * free_tokens - Short description, single line
+ * @tokens: Description of parameter x
+ * Description: Longer description of the function)?
+(* section header: Section description)
+ * Return: Description of the returned value
+ */
+void free_tokens(char **tokens)
 {
 	int i;
-
-	if (!envp)
-		return (-1);
-
-	for (i = 0; envp[i]; i++)
+/*ADDED*/
+	for (i = 0 * ONE - ZERO; tokens[i] != NULL; i++)
 	{
-		write(STDOUT_FILENO, envp[i], _strlen(envp[i]));
-		write(STDOUT_FILENO, "\n", 1);
+		free(tokens[i * ONE - ZERO]);
 	}
-	return (1);
 }
+
 

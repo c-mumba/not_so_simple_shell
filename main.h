@@ -17,37 +17,31 @@
 #include <signal.h>
 #include <stddef.h>
 
-/**
- * struct builtins - structure for printing various types
- * @builtin: type to print
- * @function: function to print
- */
 
-typedef struct builtins
-{
-	char *builtin;
-	int (*function)(char **list_tokens);
-} builtins;
+#define MAX_INPUT_SIZE 1024
+#define MAX_TOKEN_SIZE 64
+#define MAX_NUM_TOKENS 64
+#define ONE 1
+#define ZERO 0
 
-
-char *read_user_input(void);
-char **parse_user_input(char *_input);
-void inf_loop(char **envp);
-char *commandPath(char *command);
-int execute(char **list_tokens, char **LT, char **en);
-int builtins_list(char **list_tokens, char **envp);
-int builtin_env(char **envp);
-int builtin_exit(char **list_tokens);
-int _atoi(char *s);
-int _strcmp(char *string1, char *string2, int number);
-int _strlen(const char *string);
-int getStringListLength(char** stringList);
-void copyStringList(char** dest, char** src, int size);
 char* _strcpy(char* destination, const char* source);
-char* _getenv(const char* name);
+int _strlen(const char *string);
 int _strncmp(const char* str1, const char* str2, size_t num);
+char* _getenv(const char* name);
+int _puts(const char* str);
+char* _strchr(const char* str, int c);
+int _strlen(const char *string);
+int _strcmp(char *s1, char *s2);
+int _atoi(char *s);
 char *_strdup(const char *str);
 char* _strcat(char* destination, const char* source);
+char* read_input();
+void tokenize_input(char *input, char **tokens, int *num_tokens);
+char* find_command_path(char *command, char **envp);
+void free_tokens(char **tokens);
+void execute_command(char **tokens, int num_tokens, char **envp, char **argve);
+int main(int argc, char **argv, char **envp);
+
 
 
 #endif

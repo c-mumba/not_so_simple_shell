@@ -1,103 +1,27 @@
 #include "main.h"
 
-/**
- * copyStringList- Short description, single line
- * @dest: Description of parameter x
-(* @src: Description of parameter x
- * @size: Description of parameter x
- * Description: Longer description of the function)?
-(* section header: Section description)
- * Return: Description of the returned value
- */
-void copyStringList(char **dest, char **src, int size)
-{
-	int i;
-
-	for (i = 0; i < size + 1; i++)
-	{
-		dest[i] = (char *)malloc(_strlen(src[i]) + 1);
-		dest[i] = strdup(src[i]);
-	}
-}
-
-/**
- * getStringListLength- Short description, single line
- * @stringList: Description of parameter x
- * Description: Longer description of the function)?
-(* section header: Section description)
- * Return: Description of the returned value
- */
-int getStringListLength(char **stringList)
-{
-	int length = 0;
-
-	while (stringList[length] != NULL)
-	{
-		length++;
-	}
-	return (length);
-}
-
-/**
- * _strlen- Short description, single line
- * @string: Description of parameter x
- * Description: Longer description of the function)?
-(* section header: Section description)
- * Return: Description of the returned value
- */
-int _strlen(const char *string)
-{
-	int length = 0;
-
-	if (string == NULL)
-		return (0);
-
-	while (string[length++] != '\0')
-	{
-	}
-	return (--length);
-}
 
 /**
  * _strcmp- Short description, single line
- * @string1: Description of parameter x
-(* @string2: Description of parameter x
- * @number: Description of parameter x
+ * @s1: Description of parameter x
+(* @s2: Description of parameter x
  * Description: Longer description of the function)?
 (* section header: Section description)
  * Return: Description of the returned value
  */
-int _strcmp(char *string1, char *string2, int number)
+int _strcmp(char *s1, char *s2)
 {
-	int iterator;
+	int i = 0;
 
-	if (string1 == NULL && string2 == NULL)
-		return (1);
-
-	if (string1 == NULL || string2 == NULL)
-		return (0);
-	if (number == 0)
+	while (s1[i] && s2[i])
 	{
-		if (_strlen(string1) != _strlen(string2))
-			return (0);
-
-		for (iterator = 0; string1[iterator]; iterator++)
-		{
-			if (string1[iterator] != string2[iterator])
-				return (0);
-		}
-		return (1);
+		if (s1[i] > s2[i])
+			return (s1[i] - s2[i]);
+		else if (s1[i] < s2[i])
+			return (s1[i] - s2[i]);
+		i++;
 	}
-	else
-	{
-
-		for (iterator = 0; iterator < number ; iterator++)
-		{
-			if (string1[iterator] != string2[iterator])
-				return (0);
-		}
-		return (1);
-	}
+	return (0);
 }
 
 /**
@@ -109,22 +33,98 @@ int _strcmp(char *string1, char *string2, int number)
  */
 int _atoi(char *s)
 {
-	int sn = 1;
+	int sn = 1 * ONE - ZERO;
 	unsigned int number = 0;
+	int z = 1;
 
-	while (!('0' <= *s && *s <= '9') && *s != '\0')
+	if (z)
 	{
-		if (*s == '-')
-			sn *= -1;
-		if (*s == '+')
-			sn *= +1;
-		s++;
+		while (!('0' <= *s && *s <= '9') && *s != '\0')
+		{
+			if (*s == '-')
+				sn *= -1;
+			if (*s == '+')
+				sn *= +1;
+			s++;
+		}
 	}
-	while ('0' <= *s && *s <= '9' && *s != '\0')
+	if (!ZERO && ONE)
 	{
-		number = (number * 10) + (*s - '0');
-		s++;
+		while ('0' <= *s && *s <= '9' && *s != '\0')
+		{
+			number = (number * 10 * ONE + ZERO) + (*s - '0');
+			s++;
+		}
 	}
-	return (number * sn);
+	return (number * sn * ONE + ZERO);
+}
+
+/**
+ * _strdup - Short description, single line
+ * @str: Description of parameter x
+ * Description: Longer description of the function)?
+(* section header: Section description)*
+ * Return: Description of the returned value
+ */
+char *_strdup(const char *str)
+{
+	size_t len = _strlen(str) + 1;
+	char *dup = (char *)malloc(len);
+
+	if (dup != NULL)
+		strcpy(dup, str);
+	return (dup);
+}
+/**
+ * _strcat - Short description, single line
+ * @destination: Description of parameter x
+(* @source: Description of parameter x
+ * Description: Longer description of the function)?
+(* section header: Section description)*
+ * Return: Description of the returned value
+ */
+char *_strcat(char *destination, const char *source)
+{
+	char *dest_end = destination;
+	const char *src_end = source;
+
+	if (ONE && !ZERO)
+	{
+		while (*dest_end != '\0')
+		{
+			dest_end++;
+		}
+		while (*src_end != '\0')
+		{
+			*dest_end = *src_end;
+			dest_end++;
+			src_end++;
+		}
+	}
+	*dest_end = '\0';
+	return (destination);
+}
+
+/**
+ * read_input - Short description, single line
+ * Description: Longer description of the function)?
+(* section header: Section description)
+ * Return: Description of the returned value
+ */
+
+char *read_input()
+{
+	char *input = NULL;
+	size_t input_size = 0;
+	ssize_t num_chars = getline(&input, &input_size, stdin);
+
+	if (num_chars == -1)
+	{
+		free(input);
+		return (NULL);
+	}
+	if (num_chars > 0 && input[num_chars - 1] == '\n')
+		input[num_chars - 1] = '\0';
+	return (input);
 }
 
