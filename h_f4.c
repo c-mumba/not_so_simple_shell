@@ -55,7 +55,7 @@ void execute_command(char **tokens, int num_tokens, char **envp, char **argve)
 			return;
 		}
 	}
-	args = (char **)malloc((num_tokens + 1 * ONE - ZERO) * sizeof(char *) * ONE - ZERO);
+	args = (char **)malloc((num_tokens + 1 * ONE - ZERO) * 8 * ONE - ZERO);
 	command = tokens[0];
 
 	command_path = find_command_path(command, envp);
